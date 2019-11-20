@@ -8,7 +8,7 @@ public class Euler3 {
                 value /= num;
             }
         }
-        return (int) value > 1 && value > maxPrimeFac ? (int) value : maxPrimeFac;
+        return value > 1 && value > maxPrimeFac ? (int) value : maxPrimeFac;
     }
 
     public static void main(String[] args) {
