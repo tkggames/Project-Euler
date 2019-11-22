@@ -39,7 +39,6 @@ public class Euler8 {
     private static void partitions(){
        for(var ind = 0; ind + PARTITION < data.length(); ++ind)
             sub.add(data.substring(ind, ind + PARTITION));
-        System.out.println(sub);
     }
 
     private static long maxProd(){
