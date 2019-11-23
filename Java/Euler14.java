@@ -18,8 +18,8 @@ public class Euler14 {
                 root = 3 * root + 1;
                 ++counter;
             }
-            if(cache.containsKey(root)){ //compute
-                cache.put(copy, counter + cache.get(root)); //cache
+            if(cache.containsKey(root)){ //exist a computer sub part
+                cache.put(copy, counter + cache.get(root)); //cache new computation for root
                 return cache.get(copy);
             }
         }
