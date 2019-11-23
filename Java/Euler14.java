@@ -5,6 +5,9 @@ import java.util.HashMap;
 public class Euler14 {
     private static HashMap<Long, Integer> cache = new HashMap<>();
     private static int sequence(long root){
+        if(cache.containsKey(root)) //let presume its already there
+            return cache.get(root);
+        
         var counter = 1;
         var copy = root;
         while (root > 1){
