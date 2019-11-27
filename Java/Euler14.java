@@ -4,27 +4,19 @@ import java.util.HashMap;
 //https://www.youtube.com/watch?v=K0yMyUn--0s&t=355s
 public class Euler14 {
     private static HashMap<Long, Integer> cache = new HashMap<>();
-    private static int sequence(long root){
-        if(cache.containsKey(root)) //let presume its already there
-            return cache.get(root);
-        
-        var counter = 1;
-        var copy = root;
-        while (root > 1){
-            if((root & 1) == 0){
-                root >>= 1;
-                ++counter;
-            } else{
-                root = 3 * root + 1;
-                ++counter;
+    private static int sequence(long n){
+        var cp = n;
+        var cn = 1;
+        while (n > 1){
+            n = (n & 1) == 0 ? n >> 1 : 3 * n + 1;
+            if(cache.containsKey(n)){
+                cache.put(cp, cn + cache.get(n));
+                return cache.get(cp);
             }
-            if(cache.containsKey(root)){ //exist a computer sub part
-                cache.put(copy, counter + cache.get(root)); //cache new computation for root
-                return cache.get(copy);
-            }
+            cn++;
         }
-        cache.put(copy, counter); //cache
-        return counter;
+        cache.put(cp, cn);
+        return cn;
     }
 
     private static long collatz(){
