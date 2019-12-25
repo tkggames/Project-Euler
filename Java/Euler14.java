@@ -1,38 +1,43 @@
-import java.util.HashMap;
-//compiler with latest java version
-//this should help with understanding caching done here
-//https://www.youtube.com/watch?v=K0yMyUn--0s&t=355s
 public class Euler14 {
-    private static HashMap<Long, Integer> cache = new HashMap<>();
-    private static int sequence(long n){
-        var cp = n;
-        var cn = 1;
+    private static final int LIMIT = 2 << 26;
+    private static int[] cache = new int[LIMIT];
+    private static int compute(long n){
+        int cnt = 1;
+        long cp = n;
         while (n > 1){
             n = (n & 1) == 0 ? n >> 1 : 3 * n + 1;
-            if(cache.containsKey(n)){
-                cache.put(cp, cn + cache.get(n));
-                return cache.get(cp);
+            if(n < LIMIT){
+                if(cache[c(n)] > 0){
+                    if(cp < LIMIT){
+                        cache[c(cp)] = cnt + cache[c(n)];
+                        return cache[c(cp)];
+                    }
+                }
             }
-            cn++;
+            if(cp < LIMIT)
+                cache[c(cp)] = cnt;
+            ++cnt;
         }
-        cache.put(cp, cn);
-        return cn;
+        return cnt;
     }
 
-    private static long collatz(){
-        var maxChain = 0;
-        var chainValue = 0L;
-        for(var value = 13L; value < 1_000_000; ++value){
-            var curChain = sequence(value);
-            if(curChain > maxChain){
-                maxChain = curChain;
-                chainValue = value;
+    private static int c(long n){
+        return (int) n;
+    }
+    private static int chain(){
+        final int LIM = 1000_000;
+        int maxValue = 0, maxChain = 0;
+        for(long n = 13; n < LIM; ++n){
+            int cur = compute(n);
+            if(cur > maxChain){
+                maxChain = cur;
+                maxValue = c(n);
             }
         }
-        return chainValue;
+        return maxValue;
     }
 
     public static void main(String[] args) {
-        System.out.println(collatz());
+        System.out.println(chain());
     }
 }
